@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: "mongodb-raspberrypi4-unofficial-r7.0.4"
+    ports:
+      - '27017:27017'
+    volumes:
+      - data:/data/db
+    container_name: mongodb
+  backend:
+    build: "./backend"
+    ports:
+      - '3000:3000'
+    volumes:
+      - './backend:/app'
+      - /app/node_modules
+    container_name: "backend"
+    depends_on:
+      - mongodb
+volumes:
+  data:
